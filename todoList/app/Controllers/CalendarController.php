@@ -2,25 +2,33 @@
 
 namespace App\Controllers;
 
-class CalendarController
+use App\Controller;
+use App\Models\WorkModel;
+
+class CalendarController extends Controller
 {
-	public function showCalendar()
+	private $workModel;
+
+	public function __construct()
 	{
-		$events = $this->getEvents();
-		include __DIR__ . '/../views/calendar.php';
+		$this->workModel = new WorkModel();
 	}
 
-	private function getEvents()
+	public function showCalendar()
 	{
-		return [
-			[
-				'title' => 'Event 1',
-				'start' => date('Y-m-d')
-			],
-			[
-				'title' => 'Event 2',
-				'start' => date('Y-m-d', strtotime('+7 days'))
-			]
-		];
+		$start = $_GET['start'] ?? date('Y-m-01');
+		$end = $_GET['end'] ?? date('Y-m-t');
+
+		$rawWorks = $this->workModel->listWork($start, $end);
+		$works = [];
+
+		foreach ($rawWorks as $row) {
+			$works[] = [
+				'title' => $row['name'],
+				'start' => $row['start_date'],
+				'end' => $row['end_date']
+			];
+		}
+		$this->render('calendar/index', ['works' => $works]);
 	}
 }
