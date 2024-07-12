@@ -2,8 +2,7 @@
 
 require '../vendor/autoload.php';
 
-use App\Controller\HomeController;
+use App\Controllers\CalendarController;
 
-// Basic routing (for demonstration purposes)
-$controller = new HomeController();
-$controller->index();
+$controller = new CalendarController();
+$controller->showCalendar();
