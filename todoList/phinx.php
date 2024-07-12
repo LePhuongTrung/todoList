@@ -4,11 +4,9 @@ require 'vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-// Load environment variables from .env file
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// Debug: Print environment variables to check if they are loaded
 var_dump($_ENV);
 
 return [
