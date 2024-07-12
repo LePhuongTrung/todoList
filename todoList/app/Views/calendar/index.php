@@ -71,7 +71,14 @@
 		});
 
 		calendar.on('datesSet', function(info) {
-			console.log('Current view: ' + info.view.type);
+			var start = info.startStr;
+			var end = info.endStr;
+
+			$.get('/?start=' + start + '&end=' + end, function(data) {
+				var newWorks = JSON.parse(data).works;
+				calendar.removeAllEvents();
+				calendar.addEventSource(newWorks);
+			});
 		});
 
 		calendar.render();
