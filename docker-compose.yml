@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: todoList_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password1
+      MYSQL_DATABASE: attendance
+    volumes:
+      - ./config/mysql/data:/var/lib/mysql
+      - ./config/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - todoList_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: todoList_myadmin
+    environment:
+      PMA_HOSTS: todoList_db
+      PMA_USER: root
+      PMA_PASSWORD: root_password1
+      PMA_ARBITRARY: 1
+    ports:
+      - "3400:80"
+    networks:
+      - todoList_network
+
+  app:
+    container_name: todoList
+    build:
+      context: .
+      dockerfile: todoList/Dockerfile
+    volumes:
+      - ./todoList:/todoList
+    ports:
+      - "8080:9000"
+    networks:
+      - todoList_network
+
+  nginx:
+    image: nginx:latest
+    container_name: todoList_nginx
+    ports:
+      - "81:80"
+    volumes:
+      - ./todoList:/todoList
+      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - todoList_network
+
+networks:
+  todoList_network:
+    driver: bridge

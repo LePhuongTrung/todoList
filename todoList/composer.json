@@ -1,0 +1,21 @@
+{
+  "name": "trung/todolist",
+  "description": "Todo List application.",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Le Phuong Trung",
+      "email": "trunglp2001@gmail.com"
+    }
+  ],
+  "scripts": {
+    "start-server": "php -S localhost:8000 -t public"
+  },
+  "require": {}
+}
