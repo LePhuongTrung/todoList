@@ -6,7 +6,7 @@ services:
     container_name: todoList_db
     environment:
       MYSQL_ROOT_PASSWORD: root_password1
-      MYSQL_DATABASE: attendance
+      MYSQL_DATABASE: todoList
     volumes:
       - ./config/mysql/data:/var/lib/mysql
       - ./config/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
