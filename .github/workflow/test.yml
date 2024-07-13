@@ -1,0 +1,44 @@
+on:
+  push:
+    branches:
+      - feature/*
+      - fix/*
+  pull_request:
+
+name: Deploy to development environment
+
+jobs:
+  test:
+    name: phpunit test
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root_password1
+          MYSQL_DATABASE: todoList
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer:v2
+      - name: composer install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: composer install -n --prefer-dist
+      - name: copy .env
+        run: cp .env.ci .env
+      - name: migrate
+        run: php vendor/bin/phinx migrate
+        env:
+          DB_HOST: 127.0.0.1
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: vendor/bin/phpunit
+        env:
+          DB_HOST: 127.0.0.1
