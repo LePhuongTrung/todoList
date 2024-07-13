@@ -1,6 +1,7 @@
 # TodoList
 
 TodoList is a work management system with features for managing tasks and displaying them on a calendar.
+![Calendar View](image.png)
 
 ## Main Features
 
@@ -74,6 +75,7 @@ TodoList is a work management system with features for managing tasks and displa
    ```sh
    php vendor/bin/phinx seed:run
    ```
+
 ## Directory todoList Structure
 
 - `/todoList`
