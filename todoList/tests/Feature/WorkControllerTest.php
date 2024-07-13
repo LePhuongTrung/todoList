@@ -26,7 +26,7 @@ class workControllerTest extends TestCase
 		$this->db->query('DELETE FROM works');
 	}
 
-	public function testShowCalendarWithAllRecords()
+	public function testIndexWithAllRecords()
 	{
 		$_GET['start'] = '2023-07-01';
 		$_GET['end'] = '2023-07-31';
@@ -44,7 +44,7 @@ class workControllerTest extends TestCase
 		$this->assertStringContainsString('2023-07-11', $output);
 	}
 
-	public function testShowCalendarWithOnlyFirstRecord()
+	public function testIndexWithOnlyFirstRecord()
 	{
 		$_GET['start'] = '2023-07-01';
 		$_GET['end'] = '2023-07-02';
@@ -62,7 +62,7 @@ class workControllerTest extends TestCase
 		$this->assertStringNotContainsString('2023-07-11', $output);
 	}
 
-	public function testShowCalendarWithOnlySecondRecord()
+	public function testIndexWithOnlySecondRecord()
 	{
 		$_GET['start'] = '2023-07-10';
 		$_GET['end'] = '2023-07-11';
@@ -80,7 +80,7 @@ class workControllerTest extends TestCase
 		$this->assertStringContainsString('2023-07-11', $output);
 	}
 
-	public function testShowCalendarWithPartialSecondRecord()
+	public function testIndexWithPartialSecondRecord()
 	{
 		$_GET['start'] = '2023-07-11';
 		$_GET['end'] = '2023-07-12';
