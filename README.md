@@ -1,6 +1,7 @@
 # TodoList
 
 TodoList is a work management system with features for managing tasks and displaying them on a calendar.
+![Calendar View](image.png)
 
 ## Main Features
 
@@ -39,55 +40,17 @@ TodoList is a work management system with features for managing tasks and displa
 
 2. Open your browser and navigate to:
 
-   ```sh
-   http://localhost:81
-   ```
+    ```sh
+    http://localhost:3000
+    ```
 
-### command:
+## Directory Structure
 
-1. Access the application container:
-
-   ```sh
-   docker exec -it todoList bash
-   ```
-
-2. View the application logs:
-
-   ```sh
-   docker logs -f todoList
-   ```
-
-3. Run database migrations for the testing environment:
-
-   ```sh
-   php vendor/bin/phinx migrate -e testing
-   ```
-
-4. Run database migrations for the default environment:
-
-   ```sh
-   php vendor/bin/phinx migrate
-   ```
-
-5. Seed the database:
-
-   ```sh
-   php vendor/bin/phinx seed:run
-   ```
-## Directory todoList Structure
-
-- `/todoList`
-  - `/app`
-    - `/Controllers` - logic.
-    - `/Database` - setup connection.
-    - `/Models` - do query.
-    - `/Views` - UI.
-  - `/db`
-    - `/migrations` - migrate database.
-    - `/seeds` - seed example data.
-  - `/test`
-    - `/Feature` - test controller.
-    - `/Unit` - test function.
+- `/src`
+  - `/components` - React components used in the application.
+  - `/pages` - Application pages.
+  - `/services` - Services for communicating with the backend (if any).
+  - `/utils` - Utility functions for the application.
 
 ## Using Third-Party Libraries
 
