@@ -108,6 +108,7 @@ class WorkController extends Controller
 				'start' => $row['start_date'],
 				'end' => $row['end_date'],
 				'color' => $color
+
 			];
 		}
 		$this->render('calendar/index', ['works' => $works]);
