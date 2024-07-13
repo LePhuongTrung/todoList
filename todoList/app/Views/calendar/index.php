@@ -36,7 +36,7 @@
 		<div id="calendar"></div>
 	</div>
 
-	<?php include __DIR__ . '/../modal.php'; ?>
+	<?php include __DIR__ . '/../components/createWorkModal.php'; ?>
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
@@ -63,14 +63,14 @@
 				},
 				select: function(info) {
 					if (calendar.view.type === 'timeGridDay') {
-						$('#event_entry_modal').modal('show');
+						$('#create_work_modal').modal('show');
 					}
 				},
 				events: <?php echo json_encode($works); ?>,
 				eventClick: function(info) {
 					var eventId = info.event.id;
-					$('#event_entry_modal').modal('show');
-					$('#event_entry_modal').data('id', eventId);
+					$('#create_work_modal').modal('show');
+					$('#create_work_modal').data('id', eventId);
 				}
 			});
 
@@ -107,7 +107,7 @@
 					var result = JSON.parse(response);
 					if (result.status === 'success') {
 						alert('Work saved successfully!');
-						$('#event_entry_modal').modal('hide');
+						$('#create_work_modal').modal('hide');
 					} else {
 						alert('Failed to save work: ' + result.message);
 					}
