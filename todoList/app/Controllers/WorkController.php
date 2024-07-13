@@ -18,7 +18,7 @@ class WorkController
 		return $this->workModel->getStatusOptions();
 	}
 
-	public function saveWork()
+	public function store()
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$name = $_POST['work_name'];
@@ -34,6 +34,18 @@ class WorkController
 				$_SESSION['message'] = ['status' => 'error', 'text' => 'Failed to save work'];
 			}
 
+			header("Location: /");
+			exit();
+		}
+	}
+
+	public function show($id)
+	{
+		$work = $this->workModel->getWorkById($id);
+		if ($work) {
+			return $work;
+		} else {
+			$_SESSION['message'] = ['status' => 'error', 'text' => 'Work not found'];
 			header("Location: /");
 			exit();
 		}
