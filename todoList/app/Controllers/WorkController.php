@@ -96,11 +96,18 @@ class WorkController extends Controller
 		$works = [];
 
 		foreach ($rawWorks as $row) {
+			$color = match ($row['status']) {
+				'Doing' => '#FFA500',
+				'Complete' => '#008000',
+				default => null
+			};
+
 			$works[] = [
 				'id' => $row['id'],
 				'title' => $row['name'],
 				'start' => $row['start_date'],
-				'end' => $row['end_date']
+				'end' => $row['end_date'],
+				'color' => $color
 			];
 		}
 		$this->render('calendar/index', ['works' => $works]);
