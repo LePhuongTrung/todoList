@@ -62,4 +62,28 @@ class WorkModel
 		$result = $stmt->get_result();
 		return $result->fetch_assoc();
 	}
+
+	public function updateWorkById($id, $data)
+	{
+		$stmt = $this->db->prepare("UPDATE works SET name = ?, start_date = ?, end_date = ?, status = ?, updated = NOW() WHERE id = ?");
+		$stmt->bind_param('ssssi', $data['work_name'], $data['work_start_date'], $data['work_end_date'], $data['work_status'], $id);
+
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function deleteWorkById($id)
+	{
+		$stmt = $this->db->prepare("DELETE FROM works WHERE id = ?");
+		$stmt->bind_param('i', $id);
+
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
