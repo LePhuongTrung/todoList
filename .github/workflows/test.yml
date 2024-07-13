@@ -7,8 +7,7 @@ on:
       - "fix/*"
   pull_request:
     branches:
-      - "main"
-      - "dev"
+      - "*"
 
 jobs:
   test:
@@ -33,6 +32,9 @@ jobs:
 
       - name: Run Docker container
         run: docker run -d --name todo-list-app-container --network host todo-list-app
+
+      - name: Run migrate
+        run: docker exec todo-list-app-container php vendor/bin/phinx migrate
 
       - name: Run tests
         run: docker exec todo-list-app-container vendor/bin/phpunit
