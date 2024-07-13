@@ -35,17 +35,18 @@ jobs:
           php-version: "8.2"
           tools: composer:v2
 
-      - name: check todoList
-        run: ls -a
       - name: composer install
         if: steps.cache.outputs.cache-hit != 'true'
         run: composer install -n --prefer-dist
+
       - name: copy .env
         run: cp .env.ci .env
+
       - name: migrate
-        run: php artisan migrate
+        run: php vendor/bin/phinx migrate
         env:
           DB_HOST: 127.0.0.1
+
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
         env:
