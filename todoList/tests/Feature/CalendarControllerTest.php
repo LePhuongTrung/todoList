@@ -1,13 +1,13 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use App\Controllers\CalendarController;
+use App\Controllers\workController;
 use App\Database\Connection;
 
-class CalendarControllerTest extends TestCase
+class workControllerTest extends TestCase
 {
 	private $db;
-	private $calendarController;
+	private $workController;
 
 	protected function setUp(): void
 	{
@@ -18,7 +18,7 @@ class CalendarControllerTest extends TestCase
 		$this->db->query("INSERT INTO works (name, start_date, end_date) VALUES ('Test Work 1', '2023-07-01', '2023-07-02')");
 		$this->db->query("INSERT INTO works (name, start_date, end_date) VALUES ('Test Work 2', '2023-07-10', '2023-07-11')");
 
-		$this->calendarController = new CalendarController();
+		$this->workController = new WorkController();
 	}
 
 	protected function tearDown(): void
@@ -32,7 +32,7 @@ class CalendarControllerTest extends TestCase
 		$_GET['end'] = '2023-07-31';
 
 		ob_start();
-		$this->calendarController->showCalendar();
+		$this->workController->index();
 		$output = ob_get_clean();
 
 		$this->assertStringContainsString('Test Work 1', $output);
@@ -50,7 +50,7 @@ class CalendarControllerTest extends TestCase
 		$_GET['end'] = '2023-07-02';
 
 		ob_start();
-		$this->calendarController->showCalendar();
+		$this->workController->index();
 		$output = ob_get_clean();
 
 		$this->assertStringContainsString('Test Work 1', $output);
@@ -68,7 +68,7 @@ class CalendarControllerTest extends TestCase
 		$_GET['end'] = '2023-07-11';
 
 		ob_start();
-		$this->calendarController->showCalendar();
+		$this->workController->index();
 		$output = ob_get_clean();
 
 		$this->assertStringNotContainsString('Test Work 1', $output);
@@ -86,7 +86,7 @@ class CalendarControllerTest extends TestCase
 		$_GET['end'] = '2023-07-12';
 
 		ob_start();
-		$this->calendarController->showCalendar();
+		$this->workController->index();
 		$output = ob_get_clean();
 
 		$this->assertStringNotContainsString('Test Work 1', $output);
