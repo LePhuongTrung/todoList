@@ -7,13 +7,16 @@ on:
       - "fix/*"
   pull_request:
     branches:
-      - "main"
-      - "dev"
+      - "*"
 
 jobs:
   test:
     name: phpunit test
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./todoList
 
     services:
       mysql:
@@ -22,19 +25,25 @@ jobs:
           MYSQL_ROOT_PASSWORD: root_password1
           MYSQL_DATABASE: todoList
         ports:
-          - 33306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping -h 127.0.0.1 --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer:v2
 
-      - name: Build Docker image
-        run: docker build -t todo-list-app ./todoList
+      - name: composer install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: composer install -n --prefer-dist
 
-      - name: Run Docker container
-        run: docker run -d --name todo-list-app-container --network host todo-list-app
+      - name: copy .env
+        run: cp .env.ci .env
 
-      - name: Run tests
-        run: docker exec todo-list-app-container vendor/bin/phpunit
-        env:
-          DB_HOST: 127.0.0.1
+      - name: migrate
+        run: php vendor/bin/phinx migrate
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: vendor/bin/phpunit
