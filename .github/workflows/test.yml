@@ -34,7 +34,7 @@ jobs:
         run: docker run -d --name todo-list-app-container --network host todo-list-app
 
       - name: check env
-        run: docker exec todo-list-app-container ls -a
+        run: docker exec todo-list-app-container cat .env
 
       - name: Run migrate
         run: docker exec todo-list-app-container php vendor/bin/phinx migrate
