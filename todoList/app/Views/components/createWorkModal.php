@@ -22,14 +22,14 @@ $statusOptions = $workController->getStatusOptions();
 						<div class="row">
 							<div class="col-sm-8">
 								<div class="form-group">
-									<label for="work_name">Work name</label>
+									<label for="work_name">Work name:</label>
 									<input type="text" name="work_name" id="work_name" class="form-control"
 										placeholder="Enter your work name">
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label for="work_status">Status</label>
+									<label for="work_status">Status:</label>
 									<select name="work_status" id="work_status" class="form-control">
 										<?php foreach ($statusOptions as $option) : ?>
 										<option value="<?= $option ?>"><?= $option ?></option>
@@ -41,14 +41,14 @@ $statusOptions = $workController->getStatusOptions();
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label for="work_start_date">Work start</label>
+									<label for="work_start_date">Work start:</label>
 									<input type="date" name="work_start_date" id="work_start_date"
 										class="form-control onlydatepicker" placeholder="Work start date">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label for="work_end_date">Work end</label>
+									<label for="work_end_date">Work end:</label>
 									<input type="date" name="work_end_date" id="work_end_date" class="form-control"
 										placeholder="Work end date">
 								</div>
