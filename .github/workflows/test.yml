@@ -21,27 +21,27 @@ jobs:
           MYSQL_ROOT_PASSWORD: root_password1
           MYSQL_DATABASE: todoList
         ports:
-          - 3307:3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping -h 127.0.0.1 --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer:v2
+      - name: go to todoList
+        run: cd todoList
 
-      - name: Build Docker image
-        run: docker build -t todo-list-app ./todoList
+      - name: check todoList
+        run: ls -a
 
-      - name: Run Docker container
-        run: docker run -d --name todo-list-app-container --network host todo-list-app
+    #   - name: Run migrate
+    #     run: docker exec todo-list-app-container php vendor/bin/phinx migrate
+    #     env:
+    #       DB_HOST: 127.0.0.1
 
-      - name: check env
-        run: docker exec todo-list-app-container cat .env
-
-      - name: Run migrate
-        run: docker exec todo-list-app-container php vendor/bin/phinx migrate
-        env:
-          DB_HOST: 127.0.0.1
-
-      - name: Run tests
-        run: docker exec todo-list-app-container vendor/bin/phpunit
-        env:
-          DB_HOST: 127.0.0.1
+    #   - name: Run tests
+    #     run: docker exec todo-list-app-container vendor/bin/phpunit
+    #     env:
+    #       DB_HOST: 127.0.0.1
