@@ -24,6 +24,7 @@ class CalendarController extends Controller
 
 		foreach ($rawWorks as $row) {
 			$works[] = [
+				'id' => $row['id'],
 				'title' => $row['name'],
 				'start' => $row['start_date'],
 				'end' => $row['end_date']
