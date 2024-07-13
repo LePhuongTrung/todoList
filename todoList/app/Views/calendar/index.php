@@ -37,6 +37,7 @@
 	</div>
 
 	<?php include __DIR__ . '/../components/createWorkModal.php'; ?>
+	<?php include __DIR__ . '/../components/detailWorkModal.php'; ?>
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
@@ -69,8 +70,37 @@
 				events: <?php echo json_encode($works); ?>,
 				eventClick: function(info) {
 					var eventId = info.event.id;
-					$('#create_work_modal').modal('show');
-					$('#create_work_modal').data('id', eventId);
+					$('#detail_work_modal').data('id', eventId);
+
+					$.ajax({
+						url: '/works/' + eventId,
+						type: 'GET',
+						dataType: 'json',
+						success: function(data) {
+							if (!data) return console.log('get data fail');
+
+							const {
+								name,
+								id,
+								start_date,
+								end_date,
+								status
+							} = data
+
+							$('#detail_work_name').val(name);
+							$('#detail_work_status').val(status);
+							$('#detail_work_start_date').val(start_date);
+							$('#detail_work_end_date').val(end_date);
+							$('#detail_work_id').val(eventId);
+
+							$('.detail-modal-title').text('Work ' + id);
+
+							$('#detail_work_modal').modal('show');
+						},
+						error: function(error) {
+							console.log("have error", error);
+						}
+					});
 				}
 			});
 
@@ -108,6 +138,7 @@
 					if (result.status === 'success') {
 						alert('Work saved successfully!');
 						$('#create_work_modal').modal('hide');
+						location.reload()
 					} else {
 						alert('Failed to save work: ' + result.message);
 					}
