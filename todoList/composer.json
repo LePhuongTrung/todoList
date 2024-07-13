@@ -1,0 +1,28 @@
+{
+  "name": "trung/todolist",
+  "description": "Todo List application.",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Le Phuong Trung",
+      "email": "trunglp2001@gmail.com"
+    }
+  ],
+  "scripts": {
+    "start-server": "php -S localhost:8000 -t public"
+  },
+  "require": {
+    "vlucas/phpdotenv": "^5.6",
+    "robmorgan/phinx": "^0.16.1",
+    "fakerphp/faker": "^1.23"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.2"
+  }
+}

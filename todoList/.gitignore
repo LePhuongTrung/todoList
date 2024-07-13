@@ -1,0 +1,43 @@
+# Composer dependencies
+/vendor/
+
+# Composer dependency directories
+/composer.lock
+
+# PHPStorm project files
+.idea/
+
+# Vagrant environment settings
+.vagrant/
+
+# Nginx logs
+logs/
+
+# Laravel specific
+/public/storage
+/storage/*.key
+.env
+
+# Node modules
+/node_modules/
+
+# MacOS specific
+.DS_Store
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore dotenv environment variable file
+.env
+
+# Ignore IDE specific files
+*.sublime-project
+*.sublime-workspace
+*.vscode/
+
+# Ignore PHPUnit result cache
+.phpunit.result.cache
+
+# Ignore any other unnecessary files
