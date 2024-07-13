@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\WorkModel;
+use App\Controller;
 
-class WorkController
+
+class WorkController extends Controller
 {
 	private $workModel;
 
@@ -83,5 +85,24 @@ class WorkController
 		header('Content-Type: application/json', true, 500);
 		echo json_encode(['status' => 'error', 'message' => 'Failed to delete work']);
 		exit();
+	}
+
+	public function index()
+	{
+		$start = $_GET['start'] ?? date('Y-m-01');
+		$end = $_GET['end'] ?? date('Y-m-t');
+
+		$rawWorks = $this->workModel->listWork($start, $end);
+		$works = [];
+
+		foreach ($rawWorks as $row) {
+			$works[] = [
+				'id' => $row['id'],
+				'title' => $row['name'],
+				'start' => $row['start_date'],
+				'end' => $row['end_date']
+			];
+		}
+		$this->render('calendar/index', ['works' => $works]);
 	}
 }
