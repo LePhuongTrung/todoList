@@ -28,24 +28,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-          tools: composer:v2
+      - name: Build Docker image
+        run: docker build -t todo-list-app ./todoList
 
-      - name: Install dependencies
-        run: composer install -n --prefer-dist
-
-      - name: Copy .env
-        run: cp .env.ci .env
-
-      - name: Run migrations
-        run: php vendor/bin/phinx migrate
-        env:
-          DB_HOST: 127.0.0.1
+      - name: Run Docker container
+        run: docker run -d --name todo-list-app-container --network host todo-list-app
 
       - name: Run tests
-        run: vendor/bin/phpunit
+        run: docker exec todo-list-app-container vendor/bin/phpunit
         env:
           DB_HOST: 127.0.0.1

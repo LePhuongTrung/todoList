@@ -12,6 +12,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . /todoList
 
+RUN composer install --no-interaction --prefer-dist
+
+COPY .env.ci .env
+
+RUN php vendor/bin/phinx migrate
+
 EXPOSE 9000
 
 CMD ["php-fpm"]
