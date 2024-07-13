@@ -43,11 +43,45 @@ class WorkController
 	{
 		$work = $this->workModel->getWorkById($id);
 		if ($work) {
-			return $work;
-		} else {
-			$_SESSION['message'] = ['status' => 'error', 'text' => 'Work not found'];
-			header("Location: /");
+			header('Content-Type: application/json');
+			echo json_encode($work);
 			exit();
 		}
+
+		$_SESSION['message'] = ['status' => 'error', 'text' => 'Work not found'];
+		header("Location: /");
+		exit();
+	}
+
+	public function update($id)
+	{
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		$updateSuccess = $this->workModel->updateWorkById($id, $data);
+
+		if ($updateSuccess) {
+			header('Content-Type: application/json');
+			echo json_encode(['status' => 'success', 'message' => 'Work updated successfully']);
+			exit();
+		}
+
+		header('Content-Type: application/json', true, 500);
+		echo json_encode(['status' => 'error', 'message' => 'Failed to update work']);
+		exit();
+	}
+
+	public function delete($id)
+	{
+		$deleteSuccess = $this->workModel->deleteWorkById($id);
+
+		if ($deleteSuccess) {
+			header('Content-Type: application/json');
+			echo json_encode(['status' => 'success', 'message' => 'Work deleted successfully']);
+			exit();
+		}
+
+		header('Content-Type: application/json', true, 500);
+		echo json_encode(['status' => 'error', 'message' => 'Failed to delete work']);
+		exit();
 	}
 }
